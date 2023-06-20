@@ -37,7 +37,7 @@ jobs:
 
       - name: Release distributions
         run: |
-          ./gradlew -i jreleaserRelease
+          ./gradlew -s jreleaserRelease
         env:
           JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: ${{ success() && github.ref == 'refs/heads/main'}}
