@@ -1,4 +1,4 @@
-name: ilivalidator-native
+name: ili2pg-scram
 on:
   push:
     paths-ignore:
@@ -40,4 +40,4 @@ jobs:
           ./gradlew -i jreleaserRelease
         env:
           JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: ${{ success() && github.ref != 'refs/heads/main'}}
+        if: ${{ success() && github.ref == 'refs/heads/main'}}
