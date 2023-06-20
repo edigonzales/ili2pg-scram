@@ -53,7 +53,7 @@ jreleaser {
         docsUrl = 'https://github.com/edigonzales/ili2pg-scram'
         copyright = '2023 Stefan Ziegler'
         java {
-            groupId = 'ch.interlis'
+            groupId = 'ch.ehi.ili2pg'
         }
 
     }
@@ -70,11 +70,6 @@ jreleaser {
             stereotype = 'CLI'
             artifact {
                 path = "build/libs/ili2pg-"+APP_VERSION+".jar"
-            }
-            java {
-                groupId = 'ch.ehi.ili2pg'
-                artifactId = myArtifactId
-                version = '8'
             }
         }
     }
