@@ -5,6 +5,7 @@ plugins {
 }
 
 def APP_VERSION = "4.11.0"
+version = APP_VERSION
 
 def myArtifactId = "ili2pg"
 def buildNumber = System.env.GITHUB_RUN_NUMBER
@@ -64,7 +65,7 @@ jreleaser {
             distributionType = 'JAVA_BINARY'
             stereotype = 'CLI'
             artifact {
-                path = "build/libs/ili2pg-4.11.0.jar"
+                path = "build/libs/ili2pg-"+APP_VERSION+".jar"
             }
             java {
                 groupId = 'ch.ehi.ili2pg'
