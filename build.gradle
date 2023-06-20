@@ -1,0 +1,76 @@
+plugins {
+    id 'application'
+    id "com.github.johnrengelman.shadow" version "7.1.2"
+    id 'org.jreleaser' version '1.2.0'
+}
+
+def APP_VERSION = "4.11.0"
+
+def myArtifactId = "ili2pg"
+def buildNumber = System.env.GITHUB_RUN_NUMBER
+
+dependencies {
+    implementation "ch.interlis:ili2pg:${APP_VERSION}" 
+
+    /* 
+    Explizite Angabe dieser Dependency ist notwendig, das sonst runtime error.
+    Es wird bewusst die non-jre6-Version des JDBC-Treibers verwendet, damit 
+    die Probleme mit SCRAM authentification nicht auftreten:
+    https://github.com/claeis/ili2db/issues/448
+    */
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.18' 
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+        url "https://jars.interlis.ch"
+    }
+}
+
+application {
+    mainClass = 'ch.ehi.ili2pg.PgMain'
+}
+
+shadowJar {
+   archiveBaseName.set(myArtifactId)
+   archiveClassifier.set('')
+   archiveVersion.set(APP_VERSION)
+}
+
+
+jreleaser {
+    gitRootSearch = true
+    
+    project {
+        name = myArtifactId
+        description = 'ilipg scram support'
+        website = 'https://agi.so.ch'
+        authors = ['edigonzales']
+        license = 'MIT'
+        docsUrl = 'https://github.com/edigonzales/ili2pg-scram'
+        copyright = '2023 Stefan Ziegler'
+    }
+    release {
+        github {
+            repoOwner = 'edigonzales'
+            overwrite = true
+            apiEndpoint = 'https://api.github.com'
+        }
+    }
+    distributions {
+        appJvm {
+            distributionType = 'JAVA_BINARY'
+            stereotype = 'CLI'
+            artifact {
+                path = "build/libs/ili2pg-4.11.0.jar"
+            }
+            java {
+                groupId = 'ch.ehi.ili2pg'
+                artifactId = myArtifactId
+                version = '8'
+            }
+        }
+    }
+}
