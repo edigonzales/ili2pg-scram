@@ -52,6 +52,10 @@ jreleaser {
         license = 'MIT'
         docsUrl = 'https://github.com/edigonzales/ili2pg-scram'
         copyright = '2023 Stefan Ziegler'
+        java {
+            groupId = 'ch.interlis'
+        }
+
     }
     release {
         github {
